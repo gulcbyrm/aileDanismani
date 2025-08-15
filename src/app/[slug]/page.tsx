@@ -176,7 +176,7 @@ export default async function Page({
       }
     : null;
 
-  // opsiyonel alanları “any”siz direk tiple ile okuyalım
+  // opsiyonel alanları   direk tiple ile okuyalım
   const stats: User["stats"] = user.stats;
   const trainings: User["trainings"] = user.trainings;
   const skills: User["skills"] = user.skills;
