@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getUserBySlug } from "@/data/users";
+import { getUserBySlug, User } from "@/data/users";
 
 type RouteParams = { slug: string };
 import { users } from "@/data/users";
@@ -126,7 +126,7 @@ export default async function Page({
 }) {
   const { slug } = await params;
   console.log("[/slug] gelen slug:", slug); // server console
-  const user = getUserBySlug(slug);
+  const user: User | null = getUserBySlug(slug);
   if (!user) return notFound();
 
   const primary = user.theme?.primary || "#2563eb";
@@ -997,7 +997,7 @@ export default async function Page({
       {faqJsonLd && (
         <script
           type="application/ld+json"
-           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
     </div>
