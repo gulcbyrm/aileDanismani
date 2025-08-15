@@ -17,9 +17,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<RouteParams>;
+  params: RouteParams;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
+
   console.log("[/slug] gelen slug:", slug); // server console
   const u = getUserBySlug(slug);
   if (!u) return notFound();
@@ -57,42 +58,69 @@ function Badge({ children }: { children: React.ReactNode }) {
   );
 }
 
+// function InfoRow({
+//   label,
+//   value,
+//   href,
+// }: {
+//   label: string;
+//   value?: string;
+//   href?: string;
+// }) {
+//   if (!value) return null;
+//   const content = (
+//     <>
+//       <span className="text-sm text-gray-500">{label}</span>
+//       <span className="font-medium">{value}</span>
+//     </>
+//   );
+//   return (
+//     <div className="flex flex-col">
+//       {href ? (
+//         <a href={href} className="hover:underline">
+//           {content}
+//         </a>
+//       ) : (
+//         content
+//       )}
+//     </div>
+//   );
+// }
 function InfoRow({
   label,
   value,
   href,
+  icon,
 }: {
   label: string;
   value?: string;
   href?: string;
+  icon?: React.ReactNode; // ← eklendi
 }) {
   if (!value) return null;
   const content = (
-    <>
-      <span className="text-sm text-gray-500">{label}</span>
-      <span className="font-medium">{value}</span>
-    </>
-  );
-  return (
-    <div className="flex flex-col">
-      {href ? (
-        <a href={href} className="hover:underline">
-          {content}
-        </a>
-      ) : (
-        content
-      )}
+    <div className="flex items-center gap-2">
+      {" "}
+      {/* ikonu göster */}
+      {icon && <span aria-hidden>{icon}</span>}
+      <div className="flex flex-col">
+        <span className="text-sm text-gray-500">{label}</span>
+        <span className="font-medium">{value}</span>
+      </div>
     </div>
+  );
+  return href ? (
+    <a href={href} className="hover:underline">
+      {content}
+    </a>
+  ) : (
+    content
   );
 }
 
 // ========== Sayfa ==========
-export default async function Page({
-  params,
-}: {
-  params: Promise<RouteParams>;
-}) {
-  const { slug } = await params;
+export default async function Page({ params }: { params: RouteParams }) {
+  const { slug } = params;
   console.log("[/slug] gelen slug:", slug); // server console
   const user = getUserBySlug(slug);
   if (!user) return notFound();
@@ -144,20 +172,12 @@ export default async function Page({
       }
     : null;
 
-  // opsiyonel alanları “any” ile okuyalım (tip eklemediysen sorun çıkmasın)
-  const stats = (user as any).stats as
-    | { years?: number; clients?: number; satisfaction?: number }
-    | undefined;
-  const trainings = (user as any).trainings as
-    | { title: string; org?: string; when?: string }[]
-    | undefined;
-  const skills = (user as any).skills as string[] | undefined;
-  const modalities = (user as any).modalities as
-    | { online?: boolean; in_person?: boolean }
-    | undefined;
-  const availability = (user as any).availability as
-    | { days: string; hours: string }[]
-    | undefined;
+  // opsiyonel alanları “any”siz direk tiple ile okuyalım  
+  const stats = user.stats;
+  const trainings = user.trainings;
+  const skills = user.skills;
+  const modalities = user.modalities;
+  const availability = user.availability;
 
   // Harita kaynağı: mapEmbedUrl varsa onu kullan; yoksa adresten embed üret
   const mapSrc =
@@ -690,7 +710,7 @@ export default async function Page({
       )}
 
       {/* İletişim & Harita (yan yana kartlar) */}
-       {(user.phone || user.email || user.address || mapSrc) && (
+      {(user.phone || user.email || user.address || mapSrc) && (
         <section className="py-16">
           <div className="mx-auto max-w-6xl px-6">
             <div className="mb-8 flex items-center justify-between">
