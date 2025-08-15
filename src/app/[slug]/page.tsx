@@ -997,8 +997,7 @@ export default async function Page({
       {faqJsonLd && (
         <script
           type="application/ld+json"
-          // @ts-expect-error string ok
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
     </div>
