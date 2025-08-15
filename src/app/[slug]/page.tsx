@@ -177,11 +177,11 @@ export default async function Page({
     : null;
 
   // opsiyonel alanları “any”siz direk tiple ile okuyalım
-  const stats = user.stats;
-  const trainings = user.trainings;
-  const skills = user.skills;
-  const modalities = user.modalities;
-  const availability = user.availability;
+  const stats: User["stats"] = user.stats;
+  const trainings: User["trainings"] = user.trainings;
+  const skills: User["skills"] = user.skills;
+  const modalities: User["modalities"] = user.modalities;
+  const availability: User["availability"] = user.availability;
 
   // Harita kaynağı: mapEmbedUrl varsa onu kullan; yoksa adresten embed üret
   const mapSrc =
