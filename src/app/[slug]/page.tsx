@@ -17,9 +17,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: RouteParams;
+  params: Promise<RouteParams>;
 }): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
 
   console.log("[/slug] gelen slug:", slug); // server console
   const u = getUserBySlug(slug);
@@ -119,8 +119,12 @@ function InfoRow({
 }
 
 // ========== Sayfa ==========
-export default async function Page({ params }: { params: RouteParams }) {
-  const { slug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<RouteParams>;
+}) {
+  const { slug } = await params;
   console.log("[/slug] gelen slug:", slug); // server console
   const user = getUserBySlug(slug);
   if (!user) return notFound();
@@ -172,7 +176,7 @@ export default async function Page({ params }: { params: RouteParams }) {
       }
     : null;
 
-  // opsiyonel alanları “any”siz direk tiple ile okuyalım  
+  // opsiyonel alanları “any”siz direk tiple ile okuyalım
   const stats = user.stats;
   const trainings = user.trainings;
   const skills = user.skills;
@@ -192,9 +196,7 @@ export default async function Page({ params }: { params: RouteParams }) {
     <div
       style={
         {
-          // @ts-expect-error CSS var
           "--primary": primary,
-          // @ts-expect-error CSS var
           "--accent": accent,
         } as React.CSSProperties
       }
