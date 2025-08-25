@@ -58,34 +58,7 @@ function Badge({ children }: { children: React.ReactNode }) {
   );
 }
 
-// function InfoRow({
-//   label,
-//   value,
-//   href,
-// }: {
-//   label: string;
-//   value?: string;
-//   href?: string;
-// }) {
-//   if (!value) return null;
-//   const content = (
-//     <>
-//       <span className="text-sm text-gray-500">{label}</span>
-//       <span className="font-medium">{value}</span>
-//     </>
-//   );
-//   return (
-//     <div className="flex flex-col">
-//       {href ? (
-//         <a href={href} className="hover:underline">
-//           {content}
-//         </a>
-//       ) : (
-//         content
-//       )}
-//     </div>
-//   );
-// }
+ 
 function InfoRow({
   label,
   value,
