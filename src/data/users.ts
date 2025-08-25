@@ -118,8 +118,8 @@ export const users: User[] = [
     ],
 
     stats: { years: 2, clients: 200, satisfaction: 94 },
-    avatarUrl: "/avatars/ebru.jpg",
-   // coverUrl: "/hero/ebru-cover.jpg",
+    avatarUrl: "/image/avatars/ebru.jpeg",
+    // coverUrl: "/hero/ebru-cover.jpg",
     brand: "Ebru Yayla Danışmanlık",
     theme: { primary: "#0ea5e9", accent: "#f59e0b" },
     siteUrl: "https://ornek-ebru.com",
