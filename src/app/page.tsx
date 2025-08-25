@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-const users = ["ebru", "ayse", "derya"] as const;
+const users = ["ayse", "ebru", "derya"] as const;
 
 type RouteParams = Promise<{ slug: string }>;
 
