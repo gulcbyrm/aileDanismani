@@ -54,9 +54,9 @@ export type User = {
 
 export const users: User[] = [
   {
-    slug: "Ebru",
+    slug: "ebru",
     name: "Ebru Yayla",
-    title: "Okul Öncesi Öğretmeni • Aile & Çift Danışmanlığı",
+    title: "Çocuk Gelişimci • Aile & Çift Danışmanlığı",
     city: "Ankara",
     phone: "+90 537 034 39 06",
     email: "ebrubyrm3524@gmail.com",
@@ -69,6 +69,7 @@ export const users: User[] = [
       "Cinsel Terapi",
       "Bilişsel Davranışçı Yaklaşımlar (BDT)",
     ],
+
     skills: [
       "BDT ilkeleri",
       "Çözüm Odaklı Teknikler",
@@ -111,6 +112,26 @@ export const users: User[] = [
       },
       { title: "Çocuk Testleri Uygulayıcı", org: "Arel SEM", when: "2023" },
     ],
+    services: [
+      {
+        title: "Aile Danışmanlığı",
+        desc: "İletişim, sınırlar, çatışma çözümü.",
+        duration: "50 dk",
+        price: "₺1.500",
+      },
+      {
+        title: "Evlilik & İlişki",
+        desc: "Güven, yakınlık, bağlanma & çatışma yönetimi.",
+        duration: "50 dk (çift)",
+        price: "₺1.800",
+      },
+      {
+        title: "Çocuk & Ergen",
+        desc: "Duygu düzenleme, davranış & ebeveyn rehberi.",
+        duration: "45 dk",
+        price: "₺1.400",
+      },
+    ],
     modalities: { online: true, in_person: true },
     availability: [
       { days: "Hafta içi", hours: "19:00–22:00" },
@@ -119,11 +140,13 @@ export const users: User[] = [
 
     stats: { years: 2, clients: 200, satisfaction: 94 },
     avatarUrl: "/image/avatars/ebru.jpeg",
-    // coverUrl: "/hero/ebru-cover.jpg",
+    //coverUrl: "/image/kapak.png",
     brand: "Ebru Yayla Danışmanlık",
     theme: { primary: "#0ea5e9", accent: "#f59e0b" },
     siteUrl: "https://ornek-ebru.com",
   },
+
+  //diğer kullanıcı
   {
     slug: "derya",
     name: "Derya Yılmaz",

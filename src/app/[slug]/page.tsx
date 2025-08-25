@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getUserBySlug, User } from "@/data/users";
 
-type RouteParams = { slug: string };
+type RouteParams = Promise<{ slug: string }>; // <<< ÖNEMLİ: klasör adıyla aynı anahtar
 import { users } from "@/data/users";
 import SkillCloud from "@/components/SkillCloud";
 
@@ -14,15 +14,11 @@ export async function generateStaticParams() {
 }
 
 // ========== SEO Metadata (SSR) ==========
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<RouteParams>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: RouteParams }) {
   const { slug } = await params;
+  // console.log("[/slug] gelen slug:", slug);
 
-  console.log("[/slug] gelen slug:", slug); // server console
-  const u = getUserBySlug(slug);
+  const u = getUserBySlug(slug?.toLowerCase());
   if (!u) return notFound();
 
   const title = `${u.name}${u.title ? " – " + u.title : ""}`;
@@ -58,7 +54,6 @@ function Badge({ children }: { children: React.ReactNode }) {
   );
 }
 
- 
 function InfoRow({
   label,
   value,
@@ -92,14 +87,11 @@ function InfoRow({
 }
 
 // ========== Sayfa ==========
-export default async function Page({
-  params,
-}: {
-  params: Promise<RouteParams>;
-}) {
-  const { slug } = await params;
-  console.log("[/slug] gelen slug:", slug); // server console
-  const user: User | null = getUserBySlug(slug);
+export default async function Page({ params }: { params: RouteParams }) {
+  const { slug } = await params; // <<< key 'slug'
+  // console.log("[/slug] gelen slug:", slug);
+
+  const user: User | null = getUserBySlug(slug?.toLowerCase()); // <<< slug ile bul
   if (!user) return notFound();
 
   const primary = user.theme?.primary || "#2563eb";
@@ -185,7 +177,7 @@ export default async function Page({
         }}
       >
         {/* arka plan görseli (opsiyonel) */}
-        {user.coverUrl && (
+        {/* {user.coverUrl && (
           <Image
             src={user.coverUrl}
             alt="Kapak"
@@ -194,7 +186,7 @@ export default async function Page({
             className="object-cover z-0"
             sizes="100vw"
           />
-        )}
+        )} */}
 
         {/* koyulaştırma katmanları */}
         <div className="absolute inset-0 z-0 bg-black/35" />
@@ -376,41 +368,6 @@ export default async function Page({
         </section>
       )}
 
-      {/* Hizmetler */}
-      {!!user.services?.length && (
-        <section className="py-16">
-          <div className="mx-auto max-w-6xl px-6">
-            <h2 className="mb-8 text-3xl font-semibold tracking-tight">
-              Hizmetler
-            </h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {user.services!.map((s) => (
-                <div
-                  key={s.title}
-                  className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <div className="flex items-start justify-between">
-                    <h3 className="text-xl font-semibold">{s.title}</h3>
-                    <span
-                      className="ml-3 rounded-full px-3 py-1 text-sm font-medium text-white"
-                      style={{ backgroundColor: accent }}
-                    >
-                      {s.duration || "Seans"}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-gray-600">{s.desc}</p>
-                  <div className="mt-4 flex items-center gap-4 text-sm text-gray-700">
-                    {s.price && (
-                      <span className="font-semibold">💳 {s.price}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Sertifikalar / Yetkinlikler */}
       {(trainings?.length || skills?.length) && (
         <section className="py-16">
@@ -456,6 +413,40 @@ export default async function Page({
                 )}
               </div>
             )}
+          </div>
+        </section>
+      )}
+      {/* Hizmetler */}
+      {!!user.services?.length && (
+        <section className="py-16">
+          <div className="mx-auto max-w-6xl px-6">
+            <h2 className="mb-8 text-3xl font-semibold tracking-tight">
+              Hizmetler
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {user.services!.map((s) => (
+                <div
+                  key={s.title}
+                  className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                >
+                  <div className="flex items-start justify-between">
+                    <h3 className="text-xl font-semibold">{s.title}</h3>
+                    <span
+                      className="ml-3 rounded-full px-3 py-1 text-sm font-medium text-white"
+                      style={{ backgroundColor: accent }}
+                    >
+                      {s.duration || "Seans"}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-gray-600">{s.desc}</p>
+                  <div className="mt-4 flex items-center gap-4 text-sm text-gray-700">
+                    {s.price && (
+                      <span className="font-semibold">💳 {s.price}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}

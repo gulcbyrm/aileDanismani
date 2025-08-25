@@ -1,19 +1,27 @@
-import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export default function Home() {
+const users = ["ebru", "ayse", "derya"] as const;
+
+type RouteParams = Promise<{ slug: string }>;
+
+export default async function ProfilePage({ params }: { params: RouteParams }) {
+  const { slug } = await params;
+
+  // örnek eşleştirme (case-insensitive)
+  const allowed = new Set(users.map((u) => u.toLowerCase()));
+  if (!allowed.has(slug)) {
+    notFound();
+  }
+
   return (
     <main className="mx-auto max-w-xl p-8">
-      <h1 className="text-2xl font-semibold">Profil Link</h1>
-      <p className="mt-2 text-gray-600">
-        Hoş geldin! Örnek profiller:{" "}
-        <Link className="underline" href="/derya">
-          /derya
-        </Link>{" "}
-        ve{" "}
-        <Link className="underline" href="/ayse">
-          /ayse
-        </Link>
-      </p>
+      <h1 className="text-2xl font-semibold">/ {slug} profili</h1>
+      {/* kullanıcıya özel içerik */}
     </main>
   );
+}
+
+// (SSG istiyorsan)
+export function generateStaticParams() {
+  return users.map((u) => ({ slug: u })); // <<< key klasör adıyla aynı
 }
