@@ -139,7 +139,7 @@ export const users: User[] = [
     ],
 
     stats: { years: 2, clients: 200, satisfaction: 94 },
-    avatarUrl: "/image/avatars/ebru.jpeg",
+    avatarUrl: "/image/avatars/ebru.png",
     //coverUrl: "/image/kapak.png",
     brand: "Ebru Yayla Danışmanlık",
     theme: { primary: "#0ea5e9", accent: "#f59e0b" },
@@ -154,7 +154,7 @@ export const users: User[] = [
     summary:
       "Aile içi iletişim, çift ilişkileri ve çocuk gelişimi alanlarında; bilimsel yöntemlerle danışmanlık.",
     city: "İstanbul",
-    avatarUrl: "/avatars/ebru.jpg",
+    avatarUrl: "/avatars/ebru.png",
     coverUrl: "/hero/ebru-cover.jpg",
     phone: "+90 5459055189",
     whatsapp: "+90 5459055189",

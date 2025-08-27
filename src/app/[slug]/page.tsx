@@ -203,7 +203,7 @@ export default async function Page({ params }: { params: RouteParams }) {
               <div className="rounded-full ring-4 ring-white/60">
                 <div
                   className="relative overflow-hidden rounded-full"
-                  style={{ width: 96, height: 96 }}
+                  style={{ width: 120, height: 120 }}
                 >
                   {user.avatarUrl ? (
                     <Image
